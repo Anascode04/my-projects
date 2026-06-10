@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>صفحة هبوط سريعة - صور كاملة | طلب فوري | دردشة ذكية</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Tajawal', 'Segoe UI', sans-serif; background: #ffffff; line-height: 1.5; }
+        /* تحسين أداء الصور: تحميل كسل وقفل عرض سريع */
+        .full-image { width: 100%; display: block; line-height: 0; }
+        .full-image img { width: 100%; height: auto; display: block; will-change: transform; content-visibility: auto; }
+
+        .form-section {
+            width: 100%;
+            background-image: url('https://i.ibb.co/6R52wpS5/image.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            padding: 4rem 1.5rem;
+        }
+        .form-overlay {
+            max-width: 650px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.2);
+        }
+        .form-title { font-size: 1.8rem; font-weight: 700; text-align: center; margin-bottom: 0.5rem; color: #1e293b; }
+        .form-sub { text-align: center; color: #475569; margin-bottom: 1.8rem; font-size: 1rem; }
+        .form-group { margin-bottom: 1.3rem; position: relative; }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        input, select {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            border-radius: 0.75rem;
+            border: 1px solid #cbd5e1;
+            font-family: inherit;
+            font-size: 1rem;
+            background: white;
+            transition: 0.2s;
+            outline: none;
+            text-align: right;
+        }
+        .phone-wrapper {
+            position: relative;
+        }
+        .phone-wrapper input {
+            padding-left: 3rem;
+        }
+        .phone-status-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.2rem;
+            font-weight: bold;
+            pointer-events: none;
+            transition: all 0.2s ease;
+        }
+        .phone-status-icon.valid { color: #22c55e; }
+        .phone-status-icon.invalid { color: #ef4444; }
+        .phone-input-error {
+            border-color: #ef4444 !important;
+            background-color: #fef2f2 !important;
+        }
+        .phone-input-valid {
+            border-color: #22c55e !important;
+            background-color: #f0fdf4 !important;
+        }
+
+        input:focus, select:focus { border-color: #f97316; box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15); }
+        .btn-submit {
+            background: #f97316;
+            color: white;
+            border: none;
+            padding: 0.9rem;
+            font-size: 1.05rem;
+            font-weight: bold;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.2s;
+            font-family: inherit;
+            margin-top: 0.5rem;
+        }
+        .btn-submit:hover { background: #ea580c; transform: scale(0.98); }
+        .success-message {
+            background: #dcfce7;
+            color: #166534;
+            padding: 0.85rem;
+            border-radius: 0.75rem;
+            text-align: center;
+            margin-top: 1.2rem;
+            font-weight: 500;
+            display: none;
+        }
+        .error-message {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 0.85rem;
+            border-radius: 0.75rem;
+            text-align: center;
+            margin-top: 1.2rem;
+            font-weight: 500;
+            display: none;
+        }
+
+        /* الأزرار الثابتة */
+        .floating-actions {
+            position: fixed;
+            bottom: 25px;
+            left: 20px;
+            right: 20px;
+            max-width: 650px;
+            margin: 0 auto;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1000;
+            direction: rtl;
+        }
+        .floating-btn {
+            flex: 4;
+            background: linear-gradient(135deg, #ff6b00, #ff8800);
+            color: white;
+            border: none;
+            padding: 1rem 0.8rem;
+            font-size: 1.25rem;
+            font-weight: 900;
+            cursor: pointer;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(255, 107, 0, 0.4);
+            font-family: 'Tajawal', sans-serif;
+            text-align: center;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(40px) scale(0.9);
+            animation: fadeInUp 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, pulse 2s infinite 0.8s;
+        }
+        .chat-widget-btn {
+            flex: 0 0 auto;
+            width: 56px;
+            background: linear-gradient(145deg, #f97316, #ff8c42);
+            color: white;
+            border: none;
+            padding: 1rem 0;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 60px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s ease;
+            font-family: 'Tajawal', sans-serif;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(40px) scale(0.9);
+            animation: fadeInUp 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.1s forwards;
+        }
+        .chat-widget-btn:hover {
+            transform: scale(1.05);
+            background: linear-gradient(145deg, #ea580c, #f97316);
+            box-shadow: 0 12px 25px rgba(249, 115, 22, 0.5);
+        }
+        .floating-btn:hover {
+            transform: scale(1.02) translateY(-3px);
+            box-shadow: 0 15px 35px rgba(255, 107, 0, 0.6);
+            background: linear-gradient(135deg, #ea580c, #ff6b00);
+        }
+        .floating-btn:active, .chat-widget-btn:active { transform: scale(0.98); }
+
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 107, 0, 0.7); }
+            70% { box-shadow: 0 0 0 12px rgba(255, 107, 0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 107, 0, 0); }
+        }
+        .spacer-bottom { height: 90px; }
+        @media (max-width: 640px) {
+            .floating-actions { bottom: 15px; left: 12px; right: 12px; gap: 8px; max-width: 100%; }
+            .floating-btn { padding: 0.85rem 0.5rem; font-size: 1rem; }
+            .chat-widget-btn { width: 50px; font-size: 1.3rem; padding: 0.8rem 0; }
+            .form-section { padding: 2rem 1rem; }
+            .form-overlay { padding: 1.5rem; }
+            .form-title { font-size: 1.4rem; }
+            .spacer-bottom { height: 80px; }
+            .phone-wrapper input { padding-left: 2.5rem; }
+            .phone-status-icon { font-size: 1rem; left: 10px; }
+        }
+
+        .toast-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            backdrop-filter: blur(8px);
+            color: white;
+            padding: 1.2rem 2rem;
+            border-radius: 2rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+            box-shadow: 0 25px 40px -12px rgba(0,0,0,0.4);
+            z-index: 2000;
+            white-space: nowrap;
+            border-right: 5px solid #f97316;
+            border-left: 5px solid #f97316;
+            animation: fadeInOut 4s ease forwards;
+            pointer-events: none;
+            font-family: 'Tajawal', 'Segoe UI', sans-serif;
+            direction: rtl;
+        }
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
+            15% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            85% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(0.9); visibility: hidden; }
+        }
+        @media (max-width: 640px) {
+            .toast-popup { font-size: 0.95rem; padding: 0.9rem 1.5rem; white-space: normal; width: 85%; text-align: center; border-radius: 1.5rem; }
+        }
+
+        /* ========== صفحة الشكر الاحترافية ========= */
+        .thankyou-page {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            min-height: 100vh;
+            background: radial-gradient(circle at 10% 20%, rgba(249,115,22,0.08) 0%, rgba(255,255,245,1) 100%);
+            z-index: 3000;
+            font-family: 'Tajawal', 'Segoe UI', sans-serif;
+            direction: rtl;
+            overflow-y: auto;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .thankyou-card {
+            max-width: 520px;
+            width: 100%;
+            margin: 1rem auto;
+            background: #ffffff;
+            border-radius: 2rem;
+            box-shadow: 0 30px 50px -20px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(249,115,22,0.1);
+            overflow: hidden;
+            text-align: center;
+            padding: 1.8rem 1.5rem;
+            animation: slideUpPro 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            transition: all 0.3s;
+            position: relative;
+        }
+        .thankyou-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #f97316, #ffb347, #f97316);
+            border-radius: 2rem 2rem 0 0;
+        }
+        @keyframes slideUpPro {
+            from { opacity: 0; transform: translateY(30px) scale(0.96); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .thankyou-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(145deg, #fff4e6, #ffe8d6);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            box-shadow: 0 12px 20px -8px rgba(249,115,22,0.25);
+            animation: gentlePop 0.4s ease-out;
+        }
+        @keyframes gentlePop {
+            0% { transform: scale(0.7); opacity: 0; }
+            80% { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .thankyou-icon svg {
+            width: 48px;
+            height: 48px;
+        }
+        .thankyou-title {
+            font-size: 1.9rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #0f172a, #334155);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.1rem;
+            letter-spacing: -0.3px;
+        }
+        .customer-name {
+            font-size: 1.7rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #f97316, #dc2626);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            display: inline-block;
+            margin: 0.2rem 0 0.2rem;
+            letter-spacing: -0.3px;
+        }
+        .success-badge {
+            background: #f0fdf4;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.4rem 1.2rem;
+            border-radius: 40px;
+            color: #15803d;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin: 0.6rem 0;
+            border: 1px solid #bbf7d0;
+        }
+        .success-badge::before {
+            content: "✔️";
+            font-size: 1rem;
+        }
+        .message-box {
+            background: #fffbeb;
+            padding: 1rem 1.2rem;
+            border-radius: 1.4rem;
+            margin: 1rem 0 1.2rem;
+            font-size: 0.95rem;
+            color: #78350f;
+            font-weight: 600;
+            border-right: 4px solid #f97316;
+            text-align: center;
+            line-height: 1.6;
+            box-shadow: 0 4px 10px -6px rgba(0,0,0,0.05);
+        }
+
+        /* أزرار المشاركة */
+        .share-section {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 0.8rem 0 0.4rem;
+            flex-wrap: wrap;
+        }
+        .share-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: 0.2s ease;
+            border: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            background: #ffffff;
+        }
+        .share-btn svg {
+            width: 26px;
+            height: 26px;
+        }
+        .share-btn.whatsapp { background: #25D366; }
+        .share-btn.whatsapp:hover { background: #20b859; transform: translateY(-3px); }
+        .share-btn.facebook { background: #1877F2; }
+        .share-btn.facebook:hover { background: #0e62cf; transform: translateY(-3px); }
+        .share-btn.instagram { background: radial-gradient(circle at 30% 110%, #ffdb7e, #ff9a5a, #d6249f, #285AEB); }
+        .share-btn.instagram:hover { transform: translateY(-3px); filter: brightness(1.02); }
+
+        .share-tip {
+            font-size: 0.75rem;
+            color: #5b6e8c;
+            margin-top: 0.3rem;
+            margin-bottom: 0.2rem;
+            font-weight: 500;
+        }
+
+        .btn-back-simple {
+            background: linear-gradient(105deg, #f97316, #ff9233);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.6rem;
+            font-size: 0.95rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.25s;
+            font-family: inherit;
+            margin-top: 0.3rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 8px 18px -10px rgba(249,115,22,0.5);
+        }
+        .btn-back-simple:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(105deg, #ea580c, #f97316);
+            box-shadow: 0 12px 20px -10px rgba(249,115,22,0.6);
+        }
+        .btn-back-simple:active { transform: translateY(1px); }
+        .thankyou-footer {
+            font-size: 0.7rem;
+            color: #94a3b8;
+            margin-top: 1rem;
+            padding-top: 0.7rem;
+            border-top: 1px solid #f1f5f9;
+            font-weight: 500;
+        }
+        @media (max-width: 550px) {
+            .thankyou-card { padding: 1.5rem 1rem; margin: 0.8rem; border-radius: 1.8rem; }
+            .thankyou-title { font-size: 1.6rem; }
+            .customer-name { font-size: 1.4rem; }
+            .message-box { font-size: 0.85rem; padding: 0.8rem; margin: 0.8rem 0; }
+            .thankyou-icon { width: 70px; height: 70px; margin-bottom: 0.8rem; }
+            .thankyou-icon svg { width: 42px; height: 42px; }
+            .share-btn { width: 44px; height: 44px; }
+            .share-btn svg { width: 24px; height: 24px; }
+            .btn-back-simple { padding: 0.6rem 1.2rem; font-size: 0.85rem; }
+            .success-badge { font-size: 0.8rem; padding: 0.3rem 1rem; }
+            .share-tip { font-size: 0.7rem; }
+        }
+
+        /* نافذة الدردشة */
+        .chat-widget-container {
+            position: fixed;
+            bottom: 90px;
+            left: 20px;
+            right: auto;
+            max-width: 320px;
+            z-index: 1100;
+            display: flex;
+            justify-content: flex-start;
+            direction: ltr;
+            pointer-events: none;
+        }
+        .chat-box {
+            width: 320px;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.25);
+            overflow: hidden;
+            display: none;
+            flex-direction: column;
+            transition: all 0.3s;
+            border: 1px solid rgba(249,115,22,0.3);
+            animation: fadeSlideUp 0.25s ease-out;
+            pointer-events: auto;
+            margin-right: 0;
+        }
+        .chat-box.open {
+            display: flex;
+        }
+        @keyframes fadeSlideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .chat-header {
+            background: linear-gradient(135deg, #f97316, #ffa559);
+            padding: 0.9rem 1rem;
+            color: white;
+            font-weight: bold;
+            font-size: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .chat-header span { display: flex; align-items: center; gap: 8px; }
+        .chat-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 22px;
+            cursor: pointer;
+            line-height: 1;
+        }
+        .chat-messages {
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 1rem;
+            background: #fefaf5;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .message-bubble {
+            max-width: 85%;
+            padding: 0.6rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            word-break: break-word;
+        }
+        .user-msg {
+            background: #ffe3d0;
+            color: #4a2e1a;
+            align-self: flex-end;
+            border-bottom-left-radius: 6px;
+        }
+        .bot-msg {
+            background: white;
+            color: #1e293b;
+            align-self: flex-start;
+            border-bottom-right-radius: 6px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            border-right: 2px solid #f97316;
+        }
+        .quick-questions {
+            padding: 0.6rem 0.8rem 0.8rem;
+            background: #ffffff;
+            border-top: 1px solid #ffe4ce;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .quick-q-btn {
+            background: #fef3e8;
+            border: 1px solid #fbc99d;
+            padding: 0.4rem 0.7rem;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #b45309;
+            font-weight: 500;
+            text-align: center;
+            flex: 1 0 auto;
+        }
+        .quick-q-btn:hover {
+            background: #f97316;
+            color: white;
+            border-color: #f97316;
+        }
+        .typing-indicator {
+            font-size: 0.75rem;
+            color: #f97316;
+            background: #fff3e6;
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 18px;
+            width: fit-content;
+        }
+        @media (max-width: 550px) {
+            .chat-widget-container { left: 12px; right: auto; bottom: 80px; }
+            .chat-box { width: 290px; }
+        }
+        @media (max-width: 480px) {
+            .chat-widget-container { left: 8px; }
+            .chat-box { width: 280px; }
+        }
+
+        /* تحسين سرعة تحميل الزر: منع التباطؤ */
+        .btn-submit:active { transform: scale(0.97); }
+    </style>
+</head>
+<body>
+
+    <!-- الصور ست صور - إضافة loading="eager" لتحميل أسرع للصور المهمة -->
+    <div class="full-image"><img src="https://i.ibb.co/pv9pzHxJ/1.png" alt="صورة المنتج الأول" loading="eager" fetchpriority="high"></div>
+    <div class="full-image"><img src="https://i.ibb.co/JwqS3pf3/2.png" alt="صورة المنتج الثاني" loading="eager" fetchpriority="high"></div>
+    <div class="full-image"><img src="https://i.ibb.co/8nJqrgYB/3.png" alt="صورة المنتج الثالث" loading="eager" fetchpriority="high"></div>
+
+    <!-- نموذج المعلومات -->
+    <div class="form-section" id="formSection">
+        <div class="form-overlay">
+            <h3 class="form-title">📋 احصل على العرض</h3>
+            <p class="form-sub">سجل بياناتك وسنقوم بالتواصل معك</p>
+            <form id="leadForm">
+                <div class="form-group">
+                    <input type="text" id="fullName" placeholder="👤 الاسم الكامل" required>
+                </div>
+                <div class="form-group">
+                    <div class="phone-wrapper">
+                        <input type="tel" id="phone" placeholder="رقم الهاتف المحمول📞" required>
+                        <div class="phone-status-icon" id="phoneStatusIcon"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="city" placeholder="🏙️ المدينة" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="district" placeholder="🏘️ الحي او عنوان السكن" required>
+                </div>
+                <button type="submit" class="btn-submit" id="formSubmitBtn">إرسال المعلومات</button>
+                <div id="successMsg" class="success-message">✅ تم استلام بياناتك بنجاح!</div>
+                <div id="errorMsg" class="error-message">❌ حدث خطأ، حاول مرة أخرى</div>
+            </form>
+        </div>
+    </div>
+
+    <div class="spacer-bottom"></div>
+
+    <!-- الأزرار الثابتة -->
+    <div class="floating-actions">
+        <button class="floating-btn" id="orderNowBtn">📦 اطلب الآن - الدفع عند الاستلام</button>
+        <button class="chat-widget-btn" id="chatWidgetBtn">💬</button>
+    </div>
+
+    <!-- نافذة الدردشة المصغرة -->
+    <div class="chat-widget-container" id="chatWidgetContainer">
+        <div class="chat-box" id="chatBox">
+            <div class="chat-header">
+                <span>🤖 الدعم الذكي</span>
+                <button class="chat-close" id="chatCloseBtn">✕</button>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message-bubble bot-msg">👋 مرحباً! كيف يمكنني مساعدتك؟ اختر سؤالاً شائعاً.</div>
+            </div>
+            <div class="quick-questions" id="quickQuestions">
+                <div class="quick-q-btn" data-question="ما هي طرق الدفع المتاحة؟">💳 طرق الدفع</div>
+                <div class="quick-q-btn" data-question="كم مدة التوصيل؟">🚚 مدة التوصيل</div>
+                <div class="quick-q-btn" data-question="هل يوجد ضمان على المنتج؟">🛡️ الضمان</div>
+                <div class="quick-q-btn" data-question="كيف يمكنني تتبع طلبي؟">📍 تتبع الطلب</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- صفحة الشكر -->
+    <div id="thankyouPage" class="thankyou-page">
+        <div class="thankyou-card">
+            <div class="thankyou-icon">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#f97316" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M9 12L11 14L15 10" stroke="#f97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <div class="thankyou-title">شكراً لك</div>
+            <div class="customer-name" id="customerNameDisplay">(الزبون)</div>
+            <div class="success-badge">تم تسجيل طلبك بنجاح</div>
+            <div class="message-box">
+                📞 سيتم التواصل معك في أقرب وقت لتأكيد طلبك<br>
+                شكراً على ثقتك ❤️
+            </div>
+            <div class="share-section">
+                <button class="share-btn whatsapp" id="shareWhatsappBtn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white">
+                        <path d="M12.032 2.002c-5.525 0-10 4.475-10 10 0 1.78.468 3.465 1.35 4.95L2 22.002l5.144-1.355c1.436.83 3.073 1.27 4.75 1.27 5.524 0 10-4.476 10-10s-4.476-10-10-10zm0 18.4c-1.484 0-2.94-.405-4.196-1.176l-.3-.18-3.074.81.81-3.02-.19-.31a7.507 7.507 0 01-1.19-4.01c0-4.145 3.375-7.52 7.52-7.52 4.145 0 7.52 3.375 7.52 7.52 0 4.145-3.375 7.52-7.52 7.52zm4.014-5.652c-.22-.11-1.298-.64-1.5-.715-.2-.075-.346-.11-.492.11-.146.22-.564.715-.692.862-.127.146-.255.164-.475.055-.78-.39-1.46-.87-2.04-1.47-.37-.38-.67-.82-.89-1.31-.074-.2.035-.31.13-.41.09-.09.2-.23.3-.35.1-.12.135-.2.2-.33.07-.13.04-.25-.02-.35-.06-.1-.49-1.18-.67-1.62-.17-.42-.35-.36-.49-.36-.13 0-.27-.01-.41-.01-.14 0-.37.05-.56.26-.19.21-.73.72-.73 1.75s.74 2.03.85 2.17c.11.14 1.46 2.23 3.53 3.12.5.21.9.34 1.22.44.51.16.98.14 1.35.09.41-.06 1.26-.52 1.44-1.02.18-.5.18-.93.12-1.02-.06-.09-.22-.14-.44-.24z"/>
+                    </svg>
+                </button>
+                <button class="share-btn facebook" id="shareFacebookBtn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white">
+                        <path d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.658-4.788 1.324 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.714-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.73 0 1.323-.593 1.323-1.325V1.325C24 .593 23.407 0 22.675 0z"/>
+                    </svg>
+                </button>
+                <button class="share-btn instagram" id="shareInstagramBtn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.336 3.608 1.31.974.975 1.248 2.242 1.31 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.336 2.633-1.31 3.608-.975.974-2.242 1.248-3.608 1.31-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.336-3.608-1.31-.974-.975-1.248-2.242-1.31-3.608-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.062-1.366.336-2.633 1.31-3.608.975-.974 2.242-1.248 3.608-1.31 1.266-.058 1.646-.07 4.85-.07zM12 0C8.742 0 8.33.014 7.054.072 4.7.187 2.85 1.471 1.692 2.647c-1.2 1.22-1.52 2.73-1.62 4.93C.014 8.33 0 8.742 0 12s.014 3.67.072 4.946c.1 2.2.42 3.71 1.62 4.93 1.158 1.176 3.008 2.46 5.362 2.575 1.276.058 1.688.072 4.946.072s3.67-.014 4.946-.072c2.354-.115 4.204-1.399 5.362-2.575 1.2-1.22 1.52-2.73 1.62-4.93.058-1.276.072-1.688.072-4.946s-.014-3.67-.072-4.946c-.1-2.2-.42-3.71-1.62-4.93C20.296 1.47 18.446.186 16.092.072 14.816.014 14.404 0 11.16 0z"/>
+                        <path d="M12 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8z"/>
+                        <circle cx="18.406" cy="5.594" r="1.44"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="share-tip">✨ شارك المنتج مع أصدقائك ✨</div>
+            <button class="btn-back-simple" id="backToHomeBtn">🏠 الصفحة الرئيسية</button>
+            <div class="thankyou-footer">فريق الدعم - نسعد بخدمتك</div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // DOM references
+            const form = document.getElementById('leadForm');
+            const successDiv = document.getElementById('successMsg');
+            const errorDiv = document.getElementById('errorMsg');
+            const orderBtn = document.getElementById('orderNowBtn');
+            const formSection = document.getElementById('formSection');
+            const phoneInput = document.getElementById('phone');
+            const phoneStatusIcon = document.getElementById('phoneStatusIcon');
+            const thankyouPage = document.getElementById('thankyouPage');
+            const customerNameSpan = document.getElementById('customerNameDisplay');
+            const backToHomeBtn = document.getElementById('backToHomeBtn');
+            const shareWhatsappBtn = document.getElementById('shareWhatsappBtn');
+            const shareFacebookBtn = document.getElementById('shareFacebookBtn');
+            const shareInstagramBtn = document.getElementById('shareInstagramBtn');
+            const submitBtn = document.getElementById('formSubmitBtn');
+            const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbxDLWXKE0XLKK2Npng9DX1PxxrKqcJbblUypYSorJVKj-lwGCKOZHVxd0YD5O2_GRXDbg/exec';
+
+            function showToastMessage(message) {
+                const existingToast = document.querySelector('.toast-popup');
+                if(existingToast) existingToast.remove();
+                const toast = document.createElement('div');
+                toast.className = 'toast-popup';
+                toast.textContent = message;
+                document.body.appendChild(toast);
+                setTimeout(() => { if(toast && toast.parentNode) toast.remove(); }, 4000);
+            }
+            function validatePhoneNumber(phoneValue) { const cleaned = phoneValue.trim(); if(cleaned === "") return false; const digitsOnly = /^\d+$/.test(cleaned); if(!digitsOnly) return false; return cleaned.length >= 9; }
+            function updatePhoneValidationInstant() {
+                let rawValue = phoneInput.value;
+                let numericValue = rawValue.replace(/[^\d]/g, '');
+                if (numericValue !== rawValue) phoneInput.value = numericValue;
+                const finalValue = numericValue;
+                if (finalValue === "") { phoneStatusIcon.textContent = ""; phoneStatusIcon.className = "phone-status-icon"; phoneInput.classList.remove("phone-input-error", "phone-input-valid"); return; }
+                const isValid = /^\d+$/.test(finalValue) && finalValue.length >= 9;
+                if (isValid) { phoneStatusIcon.textContent = "✓"; phoneStatusIcon.className = "phone-status-icon valid"; phoneInput.classList.remove("phone-input-error"); phoneInput.classList.add("phone-input-valid"); }
+                else { phoneStatusIcon.textContent = "✗"; phoneStatusIcon.className = "phone-status-icon invalid"; phoneInput.classList.remove("phone-input-valid"); phoneInput.classList.add("phone-input-error"); }
+            }
+            phoneInput.addEventListener('input', function(e) { let raw = this.value; let onlyDigits = raw.replace(/[^\d]/g, ''); if (onlyDigits !== raw) this.value = onlyDigits; updatePhoneValidationInstant(); });
+            phoneInput.addEventListener('paste', function(e) { let pastedText = (e.clipboardData || window.clipboardData).getData('text'); if(pastedText && /[^\d]/.test(pastedText)) { e.preventDefault(); showToastMessage("⚠️ يسمح فقط بإدخال الأرقام في رقم الهاتف"); let cleaned = pastedText.replace(/[^\d]/g, ''); if (cleaned) { this.value = cleaned; updatePhoneValidationInstant(); } } else { setTimeout(() => { let val = this.value; let onlyDigits = val.replace(/[^\d]/g, ''); if (onlyDigits !== val) this.value = onlyDigits; updatePhoneValidationInstant(); }, 0); } });
+            phoneInput.addEventListener('keydown', function(e) { const controlKeys = ['Backspace', 'Delete', 'Tab', 'Escape', 'Enter', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End']; if (controlKeys.includes(e.key)) return; if (!/^\d$/.test(e.key) && e.key !== 'Unidentified') { e.preventDefault(); showToastMessage("⚠️ يسمح فقط بإدخال الأرقام في حقل الهاتف"); } });
+            updatePhoneValidationInstant();
+
+            function showThankYouPage(userName) {
+                const finalName = (userName && userName.trim() !== "") ? userName.trim() : "الزبون";
+                customerNameSpan.textContent = finalName;
+                document.querySelectorAll('.full-image, .form-section, .spacer-bottom, .floating-actions').forEach(el => { if(el) el.style.display = 'none'; });
+                document.body.style.overflow = 'hidden';
+                thankyouPage.style.display = 'flex';
+                window.scrollTo(0, 0);
+            }
+            function resetToMainPage() {
+                document.querySelectorAll('.full-image, .form-section, .spacer-bottom, .floating-actions').forEach(el => { if(el) el.style.display = ''; });
+                thankyouPage.style.display = 'none';
+                document.body.style.overflow = '';
+                form.reset();
+                phoneInput.classList.remove("phone-input-error", "phone-input-valid");
+                phoneStatusIcon.textContent = "";
+                successDiv.style.display = 'none';
+                errorDiv.style.display = 'none';
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            function getShareText() { return `🎁 مرحبا! حصلت على عرض رائع من هذا المنتج المميز 🚀. سارع لطلب نسختك الآن عبر الرابط: ${window.location.href}`; }
+            shareWhatsappBtn.addEventListener('click', () => { window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(getShareText())}`, '_blank'); });
+            shareFacebookBtn.addEventListener('click', () => { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=${encodeURIComponent("منتج رائع أنصحكم به 👍")}`, '_blank', 'width=600,height=400'); });
+            shareInstagramBtn.addEventListener('click', () => { window.open(`https://www.instagram.com/?url=${encodeURIComponent(window.location.href)}`, '_blank'); showToastMessage("📸 يمكنك مشاركة الرابط عبر قصة أو منشور في إنستغرام"); });
+
+            // تحسين سرعة الإرسال: تقليل زمن "جاري التحميل" إلى حد كبير (تغيير النص لكنه يختفي فورياً)
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const name = document.getElementById('fullName').value.trim(), phone = document.getElementById('phone').value.trim(), city = document.getElementById('city').value.trim(), district = document.getElementById('district').value.trim();
+                if(name === '' || phone === '' || city === '' || district === '') { showToastMessage("⚠️ الرجاء تعبئة جميع الحقول"); return; }
+                if(!validatePhoneNumber(phone)) { showToastMessage("⚠️ رقم الهاتف يجب أن يتكون من أرقام فقط ولا يقل عن 9 أرقام"); phoneInput.classList.add("phone-input-error"); phoneInput.classList.remove("phone-input-valid"); phoneStatusIcon.textContent = "✗"; phoneStatusIcon.className = "phone-status-icon invalid"; return; }
+                successDiv.style.display = 'none'; errorDiv.style.display = 'none';
+                const originalText = submitBtn.textContent;
+                // تقليل الاحساس بالثقل : جاري الإرسال يظهر للحظات قصيرة جدًا، لكن سرعة التنفيذ عالية
+                submitBtn.textContent = '⏳ جاري...';
+                submitBtn.disabled = true;
+                try {
+                    // إضافة مهلة صغيرة لتحسين شعور "السرعة" حتى لو كان fetch فوري
+                    await Promise.race([
+                        fetch(GOOGLE_SHEET_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name, phone, city, district }) }),
+                        new Promise(resolve => setTimeout(resolve, 200)) // بحد أقصى 200 مللي ثانية للشعور بالسرعة الفائقة
+                    ]);
+                    showThankYouPage(name);
+                    form.reset();
+                    phoneInput.classList.remove("phone-input-error", "phone-input-valid");
+                    phoneStatusIcon.textContent = "";
+                    successDiv.style.display = 'block';
+                    setTimeout(() => { successDiv.style.display = 'none'; }, 3000);
+                } catch (error) {
+                    showToastMessage("❌ حدث خطأ في الاتصال، حاول مرة أخرى");
+                    errorDiv.style.display = 'block';
+                    setTimeout(() => { errorDiv.style.display = 'none'; }, 4000);
+                } finally {
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }
+            });
+
+            function scrollFormToCenter() {
+                const rect = formSection.getBoundingClientRect();
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const targetPosition = rect.top + scrollTop - (window.innerHeight / 2) + (rect.height / 2);
+                window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+                setTimeout(() => { const firstNameField = document.getElementById('fullName'); if(firstNameField) firstNameField.focus(); }, 650);
+            }
+            orderBtn.addEventListener('click', (e) => { e.preventDefault(); scrollFormToCenter(); });
+            backToHomeBtn.addEventListener('click', () => { resetToMainPage(); });
+            window.addEventListener('popstate', (event) => { if(thankyouPage.style.display === 'flex') { resetToMainPage(); history.pushState(null, null, window.location.href); } });
+            history.pushState(null, null, window.location.href);
+
+            // Chat Logic (سريع)
+            const chatWidgetBtn = document.getElementById('chatWidgetBtn'), chatBox = document.getElementById('chatBox'), chatCloseBtn = document.getElementById('chatCloseBtn'), chatMessagesDiv = document.getElementById('chatMessages'), quickBtns = document.querySelectorAll('.quick-q-btn');
+            function addMessage(text, isUser) { const msgDiv = document.createElement('div'); msgDiv.className = `message-bubble ${isUser ? 'user-msg' : 'bot-msg'}`; msgDiv.textContent = text; chatMessagesDiv.appendChild(msgDiv); chatMessagesDiv.scrollTop = chatMessagesDiv.scrollHeight; }
+            function simulateTypingAndReply(answer) { const typingDiv = document.createElement('div'); typingDiv.className = 'typing-indicator'; typingDiv.textContent = 'الدعم يكتب ...'; chatMessagesDiv.appendChild(typingDiv); chatMessagesDiv.scrollTop = chatMessagesDiv.scrollHeight; setTimeout(() => { if(chatMessagesDiv.contains(typingDiv)) chatMessagesDiv.removeChild(typingDiv); addMessage(answer, false); }, 600); }
+            function getBotResponse(question) { const q = question.trim().toLowerCase(); if (q.includes('طرق الدفع') || q.includes('الدفع')) return '💰 نوفر الدفع عند الاستلام (كاش) أو تحويل بنكي. يمكنك اختيار الأنسب لك عند تأكيد الطلب.'; if (q.includes('مدة التوصيل') || q.includes('توصيل') || q.includes('شحن')) return '🚚 مدة التوصيل تتراوح بين 2-5 أيام عمل حسب مدينتك. نوفر شحن سريع لجميع المناطق.'; if (q.includes('ضمان') || q.includes('الضمان')) return '🛡️ نقدم ضمان استرجاع لمدة 14 يومًا إذا كان المنتج به عيب صناعي. للمزيد تواصل مع فريق الدعم.'; if (q.includes('تتبع') || q.includes('طلب')) return '📍 يمكنك تتبع طلبك عبر رابط سيُرسل على جوالك بعد شحن المنتج. أو تواصل معنا وسنزودك بالتفاصيل.'; return '🙏 شكراً لسؤالك! برجاء ترك رقمك وسنتواصل معك فوراً للإجابة الكاملة. أو اختر أحد الأسئلة الشائعة من الأعلى 😊'; }
+            function handleUserQuestion(questionText) { addMessage(questionText, true); const reply = getBotResponse(questionText); simulateTypingAndReply(reply); }
+            quickBtns.forEach(btn => { btn.addEventListener('click', () => { const question = btn.getAttribute('data-question'); if (question) handleUserQuestion(question); }); });
+            chatWidgetBtn.addEventListener('click', () => { chatBox.classList.toggle('open'); });
+            chatCloseBtn.addEventListener('click', () => { chatBox.classList.remove('open'); });
+            document.addEventListener('click', function(event) { if (!chatBox.contains(event.target) && !chatWidgetBtn.contains(event.target) && chatBox.classList.contains('open')) chatBox.classList.remove('open'); });
+        })();
+    </script>
+</body>
+</html>
