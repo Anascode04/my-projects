@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>خدمة احترافية | اطلب الآن وتواصل معنا</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: #f5f7fb;
+            color: #1a2c3e;
+            line-height: 1.5;
+            overflow-x: hidden;
+            padding-bottom: 85px; /* مساحة للأزرار الثابتة */
+        }
+
+        .container {
+            width: 100%;
+            max-width: 100%;
+            padding: 0 18px;
+            margin: 0 auto;
+        }
+
+        /* Hero section */
+        .hero {
+            position: relative;
+            min-height: 78vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border-radius: 0 0 32px 32px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            filter: brightness(0.55) contrast(1.05);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.7) 100%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            padding: 20px;
+            color: white;
+            animation: fadeInUp 0.7s ease-out;
+        }
+
+        .hero-content h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .hero-content p {
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        /* معرض الصور والفيديو */
+        .media-showcase {
+            margin: 40px 0 30px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+        }
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 70px;
+            height: 3px;
+            background: #ff7b2c;
+            margin: 10px auto 0;
+            border-radius: 4px;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 18px;
+        }
+
+        .media-card {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            transition: 0.2s;
+            cursor: pointer;
+        }
+        .media-card img, .media-card video {
+            width: 100%;
+            height: 170px;
+            object-fit: cover;
+            display: block;
+        }
+        .media-caption {
+            padding: 12px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.85rem;
+            background: white;
+        }
+
+        /* شات بوت بدون مربع كتابة (أسئلة سريعة فقط) */
+        .chatbot-section {
+            background: white;
+            border-radius: 32px;
+            padding: 20px 18px;
+            margin: 20px 0 40px;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.06);
+        }
+
+        .chat-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .chat-header i {
+            font-size: 2rem;
+            color: #ff7b2c;
+            background: #fff2e9;
+            padding: 10px;
+            border-radius: 50%;
+        }
+        .chat-header h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+        .chat-header p {
+            font-size: 0.85rem;
+            color: #5a6e7c;
+            width: 100%;
+            margin-top: 4px;
+        }
+
+        .chat-window {
+            background: #f8fafd;
+            border-radius: 28px;
+            overflow: hidden;
+            border: 1px solid #eef2f6;
+        }
+        .chat-messages {
+            height: 320px;
+            overflow-y: auto;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: #ffffff;
+        }
+        .message {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            max-width: 90%;
+        }
+        .bot-message { align-self: flex-start; }
+        .user-message { align-self: flex-end; flex-direction: row-reverse; }
+        .message-avatar {
+            width: 32px;
+            height: 32px;
+            background: #ffefe3;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+        .user-message .message-avatar { background: #2b3b4c; color: white; }
+        .message-bubble {
+            background: #f1f3f7;
+            padding: 10px 14px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            word-break: break-word;
+        }
+        .user-message .message-bubble { background: #ff7b2c; color: white; }
+
+        .quick-questions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding: 16px;
+            background: #fefcf9;
+            justify-content: center;
+            border-top: 1px solid #edf2f7;
+        }
+        .quick-q {
+            background: #f1f5f9;
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+            color: #1e2f3e;
+        }
+        .quick-q:hover {
+            background: #ffede3;
+            color: #ff7b2c;
+            transform: scale(0.97);
+        }
+
+        /* مودال طلب المعلومات */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.75);
+            backdrop-filter: blur(6px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-content {
+            background: #fff;
+            width: 100%;
+            max-width: 460px;
+            border-radius: 36px;
+            padding: 24px 22px;
+            position: relative;
+            box-shadow: 0 25px 40px rgba(0,0,0,0.3);
+            text-align: right;
+        }
+        .close-modal {
+            position: absolute;
+            left: 20px;
+            top: 18px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #aaa;
+        }
+        .form-group {
+            margin-bottom: 18px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 30px;
+            border: 1px solid #ddd;
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.95rem;
+        }
+        .form-group input:focus {
+            border-color: #ff7b2c;
+            outline: none;
+        }
+        input[type="tel"] {
+            direction: ltr;
+            text-align: left;
+        }
+        .submit-order {
+            background: #ff7b2c;
+            color: white;
+            width: 100%;
+            padding: 14px;
+            font-weight: 700;
+            border-radius: 40px;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: 0.2s;
+        }
+        .submit-order:hover {
+            background: #e56610;
+        }
+
+        /* نافذة تأكيد منبثقة جميلة (بدون تحويل لواتساب) */
+        .confirm-popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+            z-index: 1200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.25s ease;
+        }
+        .confirm-popup-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .confirm-card {
+            background: white;
+            max-width: 340px;
+            width: 85%;
+            border-radius: 48px;
+            text-align: center;
+            padding: 32px 24px;
+            box-shadow: 0 25px 40px rgba(0,0,0,0.3);
+            animation: popScale 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
+            direction: rtl;
+        }
+        .confirm-card i {
+            font-size: 4rem;
+            color: #ff7b2c;
+            background: #fff2e9;
+            padding: 15px;
+            border-radius: 60px;
+            margin-bottom: 18px;
+        }
+        .confirm-card h3 {
+            font-size: 1.7rem;
+            margin-bottom: 12px;
+            color: #1e2f3e;
+        }
+        .confirm-card p {
+            color: #4a5c6b;
+            font-size: 1rem;
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+        .confirm-ok {
+            background: #ff7b2c;
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 80%;
+        }
+        @keyframes popScale {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        /* الأزرار الثابتة بالأسفل */
+        .fixed-buttons {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            background: rgba(255,255,255,0.96);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 -6px 20px rgba(0,0,0,0.12);
+            padding: 12px 20px;
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            z-index: 999;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+        .fixed-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 12px;
+            border-radius: 60px;
+            font-weight: 800;
+            font-size: 1rem;
+            transition: 0.2s;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            text-decoration: none;
+        }
+        .btn-order-fixed {
+            background: #ff7b2c;
+            color: white;
+        }
+        .btn-wa-fixed {
+            background: #25D366;
+            color: white;
+        }
+
+        footer {
+            background: #1e2f3c;
+            color: #cfdde6;
+            text-align: center;
+            padding: 24px 16px;
+            margin-top: 40px;
+            border-radius: 32px 32px 0 0;
+            font-size: 0.8rem;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+        @media (max-width: 550px) {
+            .hero-content h1 { font-size: 1.8rem; }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .media-card img, .media-card video { height: 140px; }
+            .quick-q { font-size: 0.75rem; padding: 6px 14px; }
+            .fixed-btn { font-size: 0.9rem; padding: 12px 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Hero Section - الشريط العلوي المتحرك تم إزالته بالكامل -->
+<div class="hero">
+    <video class="hero-bg" autoplay muted loop playsinline poster="https://picsum.photos/id/104/800/1200">
+        <source src="https://cdn.pixabay.com/video/2021/09/21/90762-602993243_large.mp4" type="video/mp4">
+        <img src="https://images.pexels.com/photos/3184192/pexels-photo-3184192.jpeg?auto=compress&cs=tinysrgb&w=800" alt="hero">
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <h1>خدمات احترافية بلمسة ذكية</h1>
+        <p>شات بوت يجيب على أسئلتك + طلب سريع عبر الواتساب</p>
+    </div>
+</div>
+
+<div class="container">
+    <!-- معرض الصور والفيديوهات (روابط) -->
+    <div class="media-showcase">
+        <h2 class="section-title"><i class="fas fa-photo-video"></i> روابط الصور والفيديوهات</h2>
+        <div class="gallery-grid">
+            <div class="media-card">
+                <img src="https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=600" alt="عمل احترافي">
+                <div class="media-caption">تصميم عصري - اضغط لفتح الرابط</div>
+            </div>
+            <div class="media-card">
+                <img src="https://images.pexels.com/photos/4386428/pexels-photo-4386428.jpeg?auto=compress&cs=tinysrgb&w=600" alt="فريق العمل">
+                <div class="media-caption">فريق متخصص - رابط الصورة</div>
+            </div>
+            <div class="media-card video-container">
+                <video controls poster="https://images.pexels.com/photos/7079645/pexels-photo-7079645.jpeg?auto=compress&cs=tinysrgb&w=600">
+                    <source src="https://cdn.pixabay.com/video/2022/10/21/136314-764558601_tiny.mp4" type="video/mp4">
+                </video>
+                <div class="media-caption">فيديو تعريفي (اضغط لفتح الرابط)</div>
+            </div>
+            <div class="media-card">
+                <img src="https://images.pexels.com/photos/57690/pexels-photo-57690.jpeg?auto=compress&cs=tinysrgb&w=600" alt="منتج مميز">
+                <div class="media-caption">منتجات عالية الجودة - رابط</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- شات بوت (بدون حقل إدخال - أسئلة سريعة فقط) -->
+    <div class="chatbot-section">
+        <div class="chat-header">
+            <i class="fas fa-robot"></i>
+            <div>
+                <h3>محادثة الدعم الذكي</h3>
+                <p>اختر سؤالاً من الأسئلة الشائعة لتحصل على إجابة فورية</p>
+            </div>
+        </div>
+        <div class="chat-window">
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot-message">
+                    <div class="message-avatar"><i class="fas fa-headset"></i></div>
+                    <div class="message-bubble">مرحباً! أنا مساعدك الذكي. اضغط على أحد الأسئلة أدناه للحصول على إجابة فورية 🤖</div>
+                </div>
+            </div>
+            <div class="quick-questions" id="quickQuestions">
+                <div class="quick-q" data-question="ما هي أوقات التوصيل؟">🕒 أوقات التوصيل</div>
+                <div class="quick-q" data-question="كيف أتواصل مع خدمة العملاء؟">📞 التواصل مع الدعم</div>
+                <div class="quick-q" data-question="هل يوجد ضمان على المنتجات؟">✅ سياسة الضمان</div>
+                <div class="quick-q" data-question="ما هي طرق الدفع المتاحة؟">💰 طرق الدفع</div>
+                <div class="quick-q" data-question="أريد التحدث مع دعم بشري">👤 دعم بشري</div>
+                <div class="quick-q" data-question="ما هي أوقات التوصيل؟">🚚 سرعة التوصيل</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- الأزرار الثابتة بالأسفل -->
+<div class="fixed-buttons">
+    <button class="fixed-btn btn-order-fixed" id="floatingOrderBtn">
+        <i class="fas fa-shopping-cart"></i> اطلب الان
+    </button>
+    <a href="#" class="fixed-btn btn-wa-fixed" id="whatsappFixedBtn">
+        <i class="fab fa-whatsapp"></i> واتساب
+    </a>
+</div>
+
+<!-- مودال طلب المعلومات (الاسم، رقم الهاتف، المدينة، الحي) -->
+<div id="orderModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" id="closeModalBtn">&times;</span>
+        <h3><i class="fas fa-edit"></i> اطلب الان</h3>
+        <p>يرجى تعبئة بياناتك لتأكيد الطلب</p>
+        <form id="orderForm">
+            <div class="form-group"><label>الاسم كاملاً</label><input type="text" id="fullName" placeholder="مثال: أحمد محمد" required></div>
+            <div class="form-group"><label>رقم الهاتف (أرقام فقط)</label><input type="tel" id="phoneNumber" placeholder="05xxxxxxxx" pattern="[0-9]+" inputmode="numeric" required></div>
+            <div class="form-group"><label>المدينة</label><input type="text" id="city" placeholder="مثال: الرياض، جدة" required></div>
+            <div class="form-group"><label>الحي</label><input type="text" id="district" placeholder="الحي / الشارع" required></div>
+            <button type="submit" class="submit-order">إرسال الطلب</button>
+        </form>
+    </div>
+</div>
+
+<!-- نافذة تأكيد منبثقة مخصصة (بدون واتساب) -->
+<div id="confirmOverlay" class="confirm-popup-overlay">
+    <div class="confirm-card">
+        <i class="fas fa-check-circle"></i>
+        <h3>تم استلام طلبك!</h3>
+        <p>شكراً لتواصلك معنا، سيتم التواصل معك قريباً عبر الهاتف أو الواتساب لتأكيد الطلب.</p>
+        <button class="confirm-ok" id="confirmOkBtn">حسناً</button>
+    </div>
+</div>
+
+<footer><i class="fas fa-copyright"></i> 2025 جميع الحقوق محفوظة | دعم عبر الشات بوت وواتساب</footer>
+
+<script>
+    (function() {
+        // رقم الواتساب للتواصل المباشر (الزر الأخضر فقط)
+        const whatsappNumber = "966512345678";
+        const defaultWhatsMsg = "مرحباً، أحتاج مساعدة بخصوص خدماتكم.";
+
+        function openWhatsApp(msg) {
+            window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`, '_blank');
+        }
+
+        // زر الواتساب الثابت (يبقى للتواصل)
+        const whatsappFixed = document.getElementById('whatsappFixedBtn');
+        if(whatsappFixed) {
+            whatsappFixed.addEventListener('click', (e) => {
+                e.preventDefault();
+                openWhatsApp(defaultWhatsMsg);
+            });
+        }
+
+        // ------------------- نظام الطلب (مودال + التأكيد فقط بدون واتساب) -------------------
+        const modal = document.getElementById('orderModal');
+        const closeModal = document.getElementById('closeModalBtn');
+        const floatingOrderBtn = document.getElementById('floatingOrderBtn');
+        const orderForm = document.getElementById('orderForm');
+        const phoneInput = document.getElementById('phoneNumber');
+
+        // منع الحروف في رقم الهاتف
+        if(phoneInput) {
+            phoneInput.addEventListener('input', function(e) {
+                this.value = this.value.replace(/[^0-9+]/g, '');
+                if(this.value.length > 15) this.value = this.value.slice(0,15);
+            });
+        }
+
+        function showModal() { modal.style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+        function hideModal() { modal.style.display = 'none'; document.body.style.overflow = ''; }
+
+        if(floatingOrderBtn) floatingOrderBtn.addEventListener('click', showModal);
+        if(closeModal) closeModal.addEventListener('click', hideModal);
+        window.addEventListener('click', (e) => { if(e.target === modal) hideModal(); });
+
+        // عناصر نافذة التأكيد
+        const confirmOverlay = document.getElementById('confirmOverlay');
+        const confirmOkBtn = document.getElementById('confirmOkBtn');
+
+        function showConfirmPopup() {
+            if(confirmOverlay) {
+                confirmOverlay.classList.add('active');
+            }
+        }
+        function hideConfirmPopup() {
+            if(confirmOverlay) {
+                confirmOverlay.classList.remove('active');
+            }
+        }
+        if(confirmOkBtn) {
+            confirmOkBtn.addEventListener('click', hideConfirmPopup);
+        }
+        // إغلاق عند الضغط على الخلفية
+        if(confirmOverlay) {
+            confirmOverlay.addEventListener('click', (e) => {
+                if(e.target === confirmOverlay) hideConfirmPopup();
+            });
+        }
+
+        // معالجة إرسال الطلب (عرض التأكيد فقط + بدون واتساب)
+        if(orderForm) {
+            orderForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const fullName = document.getElementById('fullName').value.trim();
+                let phone = document.getElementById('phoneNumber').value.trim();
+                const city = document.getElementById('city').value.trim();
+                const district = document.getElementById('district').value.trim();
+
+                if(!fullName || !phone || !city || !district) {
+                    alert('يرجى تعبئة جميع الحقول (الاسم، رقم الهاتف، المدينة، الحي)');
+                    return;
+                }
+                // منع أي حروف عربية أو إنجليزية في رقم الهاتف
+                if(/[a-zA-Z\u0600-\u06FF]/g.test(phone)) {
+                    alert('رقم الهاتف يجب أن يحتوي على أرقام فقط');
+                    return;
+                }
+                if(phone.length < 9) {
+                    alert('الرجاء إدخال رقم هاتف صالح (مثال: 05xxxxxxxx)');
+                    return;
+                }
+
+                // ✅ لا نرسل إلى الواتساب، فقط نعرض نافذة التأكيد
+                // يتم تخزين البيانات محلياً أو لا حاجة لإرسالها، فقط إشعار للمستخدم
+                showConfirmPopup();
+
+                // إعادة تعيين النموذج وإغلاق المودال
+                orderForm.reset();
+                hideModal();
+            });
+        }
+
+        // ------------------- شات بوت (أسئلة سريعة) -------------------
+        const chatMessagesDiv = document.getElementById('chatMessages');
+
+        function addBotMessage(text) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'message bot-message';
+            const avatar = document.createElement('div');
+            avatar.className = 'message-avatar';
+            avatar.innerHTML = '<i class="fas fa-headset"></i>';
+            const bubble = document.createElement('div');
+            bubble.className = 'message-bubble';
+            bubble.innerText = text;
+            msgDiv.appendChild(avatar);
+            msgDiv.appendChild(bubble);
+            chatMessagesDiv.appendChild(msgDiv);
+            chatMessagesDiv.scrollTop = chatMessagesDiv.scrollHeight;
+        }
+
+        function addUserMessage(text) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'message user-message';
+            const avatar = document.createElement('div');
+            avatar.className = 'message-avatar';
+            avatar.innerHTML = '<i class="fas fa-user"></i>';
+            const bubble = document.createElement('div');
+            bubble.className = 'message-bubble';
+            bubble.innerText = text;
+            msgDiv.appendChild(avatar);
+            msgDiv.appendChild(bubble);
+            chatMessagesDiv.appendChild(msgDiv);
+            chatMessagesDiv.scrollTop = chatMessagesDiv.scrollHeight;
+        }
+
+        function getBotReply(question) {
+            const q = question.trim().toLowerCase();
+            if(q.includes('توصيل') || q.includes('وقت التوصيل') || q.includes('متى يوصل') || q.includes('سرعة التوصيل')) {
+                return "🕒 أوقات التوصيل: من السبت إلى الخميس 9ص-10م، والتوصيل خلال 24 ساعة كحد أقصى. هل تريد معرفة المناطق المشمولة؟";
+            } else if(q.includes('خدمة العملاء') || q.includes('اتواصل') || q.includes('الدعم') || q.includes('كيف أتواصل')) {
+                return "📞 يمكنك التواصل عبر زر الواتساب الموجود بالأسفل أو الاتصال على الرقم 966512345678. فريق الدعم يرد خلال دقائق.";
+            } else if(q.includes('ضمان') || q.includes('المنتجات')) {
+                return "✅ نعم، جميع خدماتنا مضمونة لمدة عام كامل ضد عيوب الصناعة. يمكنك طلب الاستبدال بسهولة عبر واتساب.";
+            } else if(q.includes('دفع') || q.includes('طرق الدفع')) {
+                return "💰 طرق الدفع: مدى، فيزا، ماستركارد، والدفع عند الاستلام (في المناطق المحددة).";
+            } else if(q.includes('دعم بشري') || q.includes('تحويل') || q.includes('موظف') || q.includes('اتكلم مع')) {
+                return "👨‍💼 سيتم تحويلك إلى دعم بشري خلال لحظات. الرجاء الضغط على زر الواتساب الأخضر للتواصل المباشر مع المستشار.";
+            } else {
+                return "🙏 شكراً لسؤالك! سأحول طلبك لأحد المندوبين. يمكنك أيضاً مراسلتنا عبر واتساب (الزر بالأسفل). هل لديك سؤال آخر؟";
+            }
+        }
+
+        function handleQuickQuestion(questionText) {
+            if(!questionText) return;
+            addUserMessage(questionText);
+            setTimeout(() => {
+                const reply = getBotReply(questionText);
+                addBotMessage(reply);
+            }, 500);
+        }
+
+        const quickBtns = document.querySelectorAll('.quick-q');
+        quickBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const qText = btn.getAttribute('data-question');
+                if(qText) handleQuickQuestion(qText);
+            });
+        });
+
+        // ------------------- روابط الصور والفيديوهات -------------------
+        const mediaCards = document.querySelectorAll('.media-card');
+        mediaCards.forEach(card => {
+            card.style.cursor = 'pointer';
+            card.addEventListener('click', (e) => {
+                if(e.target.tagName === 'VIDEO' || e.target.closest('video') && e.target !== card) {
+                    if(e.target.tagName === 'VIDEO' || e.target.tagName === 'SOURCE') return;
+                    if(e.target.closest('video') && !e.target.closest('.media-card')?.isSameNode(card)) return;
+                }
+                const img = card.querySelector('img');
+                const video = card.querySelector('video');
+                if(img && img.src) {
+                    window.open(img.src, '_blank');
+                } else if(video) {
+                    const source = video.querySelector('source');
+                    if(source && source.src) window.open(source.src, '_blank');
+                    else if(video.src) window.open(video.src, '_blank');
+                }
+            });
+        });
+    })();
+</script>
+</body>
+</html>
