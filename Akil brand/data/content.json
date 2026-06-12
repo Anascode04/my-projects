@@ -1,0 +1,88 @@
+{
+  "site_title": "Akil Brand",
+  "logo_url": "/static/uploads/logo/logo_a145147480104b89b8087754f39dfdf0_Black_and_White_Star_Y2k_Streetwear_Logo_1.png",
+  "hero": {
+    "background_image": "/static/uploads/products/e59e2d62753748c1a6930cc3a86645b6_Gemini_Generated_Image_39wtpg39wtpg39wt.png",
+    "title": " ",
+    "button1_text": "Akil Brand",
+    "button2_text": "SHOPING"
+  },
+  "brands": {
+    "subtitle": "شركاؤنا المميزون",
+    "title": "الماركات العالمية"
+  },
+  "collections_section": {
+    "subtitle": "اكتشف عالم الأناقة",
+    "title": "المجموعات الحصرية"
+  },
+  "collections": [
+    {
+      "description": "قطع حصرية للمناسبات الخاصة",
+      "image": "/static/uploads/products/c048afda7db24e32ac9a35d4072b5f79_Gemini_Generated_Image_2cu8y42cu8y42cu8.png",
+      "title": "مجموعة الفخامة"
+    },
+    {
+      "description": "أناقة يومية بلمسة عصرية",
+      "image": "https://www.impulsyn.com/wp-content/uploads/2024/07/taylor-siebert-qmDB3JT9nzU-unsplash-scaled.jpg",
+      "title": "مجموعة الكاجوال"
+    },
+    {
+      "description": "احترافية وثقة في العمل",
+      "image": "https://i8.amplience.net/i/jpl/jd_725779_a?qlt=92&w=600&h=765&v=1&fmt=auto",
+      "title": "مجموعة الأعمال"
+    }
+  ],
+  "products_section": {
+    "load_more_text": "تحميل المزيد",
+    "subtitle": "تسوق بتميز",
+    "title": "منتجاتنا المختارة"
+  },
+  "contact_info": {
+    "address": "مغوغة صغيرة",
+    "email": "info@akilbrand.com",
+    "phone": "0602456777"
+  },
+  "footer": {
+    "description": "وجهتكم الأولى للماركات الرجالية العالمية الفاخرة. نقدم تشكيلة حصرية من أرقى العلامات التجارية العالمية مع التركيز على الجودة والأناقة والتميز.",
+    "newsletter_description": "اشترك ليصلك كل جديد عن عروضنا ومنتجاتنا الحصرية.",
+    "newsletter_title": "النشرة البريدية"
+  },
+  "top_banner": {
+    "bg_color": "#ffdd00",
+    "enabled": false,
+    "link": "https://www.iloveimg.com/ar/download/2lfps3lc28r5lkd7kdr6r914njphrr1gncjl7j27d9g7xrrdhc78Ag6tt20gg8y51740sm8b37snrvny44rlnj9bjfm0njq9A5mxwwckx5wx9Atq3kwh6mkfc9zbv4jf72jAryjl5qx4gqrbyAjx4h49pplfl9grphglhjm8655vq8xrxdzfgj0nt33lkjzzzk9f4972v6mc9/4g",
+    "text": " الشحن ليس مجاناً هذا الأسبوع!",
+    "text_color": "#000000"
+  },
+  "social_media": {
+    "facebook": "https://facebook.com/akilbrand",
+    "instagram": "https://www.instagram.com/mosaab_original?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
+    "map": "https://maps.google.com/?q=طنجة+المغاوغة،+المغرب",
+    "telegram": "https://t.me/akilbrand",
+    "whatsapp": "https://wa.me/212649700198"
+  },
+  "about_text": "نقدم تشكيلة حصرية من أرقى العلامات التجارية العالمية مع التركيز على الجودة والأناقة والتميز.",
+  "collections_section_subtitle": "المجموعات الحصرية",
+  "collections_section_title": "اكتشف عالم الأناقة",
+  "hero_image": "https://preview.free3d.com/img/2018/10/2400320422412289601/xiwaq15m.jpg",
+  "hero_subtitle": "وجهتكم الأولى للماركات الرجالية العالمية الفاخرة",
+  "hero_title": "Akil Anas | عالم الفخامة والأناقة الرجالية",
+  "offers": [
+    {
+      "active": true,
+      "description": "عرض محدود لفترة قصيرة",
+      "title": "خصم 20% على المجموعة الكاملة"
+    },
+    {
+      "active": true,
+      "description": "لجميع مناطق المملكة",
+      "title": "شحن مجاني للطلبات فوق 500 ر.س"
+    }
+  ],
+  "site_settings": {
+    "favicon_url": "",
+    "logo_url": "/static/uploads/logo/8c8b6052474741a28bc4c16ed28b66a7_Gemini_Generated_Image_nm8ifwnm8ifwnm8i__1_-removebg-preview.png",
+    "site_description": "",
+    "site_title": ""
+  }
+}
